@@ -147,19 +147,15 @@ $logData = [
 // Сохраняем лог
 file_put_contents($logFile, json_encode($logData, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
 
-// --- Заглушки для сохранения Акта и штрихкодов ---
-// В реальном проекте здесь будет генерация PDF
-$saveDir = __DIR__ . '/pec_files';
-if (!is_dir($saveDir)) {
-    mkdir($saveDir, 0777, true);
-}
-
 // Сохраняем "Акт приема-передачи"
-file_put_contents($saveDir . "/act_deal_{$deal_Id}.txt", "Акт приема-передачи для сделки #{$deal_Id}, дата: " . date('Y-m-d'));
+PecService::getPDF($registerResponse['cargos'][0]['cargoCode'], $deal_Id, __DIR__);
 
 // --- Сохраняем штрихкоды в формате CODE-128 ---
+PecService::getPDF($registerResponse['cargos'][0]['cargoCode'], $deal_Id, __DIR__, true);
+
+// --- Сохраняем штрихкоды в формате CODE-128 в виде короткого штрихкода ---
 foreach ($registerResponse['cargos'][0]['positions'] as $i => $barcode) {    
-    PecService::createBarCodePng($i, $barcode['barcode'], $deal_Id);
+    PecService::createBarCodePng($i, $barcode['barcode'], $deal_Id, __DIR__);
 }
 
 // --- Выводим сообщение об успешном выполнении ---

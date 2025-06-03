@@ -6,11 +6,7 @@
 ```
 git clone https://github.com/mark-darko/PecCalculator.git
 ```
-2. Установите необходимые зависимости:
-```
-composer install
-```
-3. Отредактируйте данные в config.php и укажите свои данные для подключения к API PEC:
+2. Отредактируйте данные в config.php и укажите свои данные для подключения к API PEC:
 ```
 apiUser => '{your_api_login}';
 apiKeypec => '{your_api_key}';
